@@ -1,0 +1,23 @@
+<header>
+    <mat-toolbar color="primary">
+        <button mat-icon-button aria-label="Example icon-button with menu icon"
+          (click)="onMenuIconClick()">
+          	<mat-icon>menu</mat-icon>
+        </button>
+        <span>My App</span>
+
+        <div fxFlex fxLayoutAlign="end">
+          	<button mat-button [matMenuTriggerFor]="menu">
+            	<mat-icon>person_outline</mat-icon>
+          	</button>
+          	<mat-menu #menu="matMenu">
+            	<a routerLink="/auth/register" mat-menu-item *ngIf="!currentUser"> Register </a>
+            	<a routerLink="/auth/login" mat-menu-item *ngIf="!currentUser"> Login </a>
+            	<div *ngIf="currentUser">
+              		<p mat-menu-item>Hi, {{ currentUser.email }}</p>
+             		<p mat-menu-item (click)="logout()">Logout</p>
+            	</div>
+          	</mat-menu>
+        </div>
+    </mat-toolbar>
+</header>

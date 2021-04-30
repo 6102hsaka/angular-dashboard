@@ -1,0 +1,18 @@
+:host {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.mat-sidenav-container {
+    height: 100vh;
+
+    .mat-sidenav {
+        width: 280px;
+        padding: 12px 26px;
+    }
+
+    .mat-sidenav-content {
+        padding: 12px 26px;
+    }
+}

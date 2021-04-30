@@ -11,11 +11,22 @@
             	<mat-icon>person_outline</mat-icon>
           	</button>
           	<mat-menu #menu="matMenu">
-            	<a routerLink="/auth/register" mat-menu-item *ngIf="!currentUser"> Register </a>
-            	<a routerLink="/auth/login" mat-menu-item *ngIf="!currentUser"> Login </a>
+            	<div *ngIf="!currentUser">
+					<a routerLink="/auth/register" mat-menu-item > 
+						<mat-icon>person_add</mat-icon>
+						Register 
+					</a>
+					<a routerLink="/auth/login" mat-menu-item> 
+						<mat-icon>login</mat-icon>
+						Login 
+					</a>
+				</div>
             	<div *ngIf="currentUser">
               		<p mat-menu-item>Hi, {{ currentUser.email }}</p>
-             		<p mat-menu-item (click)="logout()">Logout</p>
+             		<p mat-menu-item (click)="onLogout()">
+						<mat-icon>logout</mat-icon>
+						Logout
+					</p>
             	</div>
           	</mat-menu>
         </div>

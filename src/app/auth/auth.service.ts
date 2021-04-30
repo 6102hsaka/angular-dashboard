@@ -26,12 +26,14 @@ export class AuthService {
         const len = this.savedUsers.length;
         const newUser = new User(len+"", email, password);
         this.currentlyLoggedInUser.next(newUser);
+        this.router.navigate(["/home"]);
     }
 
     signIn(email: string, password: string) {
         const filteredData = this.savedUsers.filter(user => user.email===email && user.password===password);
         if(filteredData.length===1) {
             this.currentlyLoggedInUser.next(filteredData[0]);
+            this.router.navigate(["/home"]);
         } else {
             this.currentlyLoggedInUser.next(null);
         }

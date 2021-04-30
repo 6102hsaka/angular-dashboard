@@ -27,7 +27,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
     onMenuIconClick = () => this.sidebarToogleEvent.emit();
     
-    logout = () => this.authService.logout();
+    onLogout = () => this.authService.logout();
 
     ngOnDestroy(): void {
         this.userSubscription.unsubscribe();

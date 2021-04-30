@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { User } from './auth/user.model';
 
 @Component({
   selector: 'app-root',
@@ -9,9 +8,5 @@ import { User } from './auth/user.model';
 export class AppComponent implements OnInit {
   title = 'angular-dashboard';
 
-  loadedUser: User;
-
-  ngOnInit(): void {
-    
-  }
+  ngOnInit(): void { }
 }

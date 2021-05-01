@@ -9,6 +9,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedModule } from './pages/shared/shared.module';
 import { UserModule } from './pages/user/user.module';
 import { environment } from 'src/environments/environment';
+import { WidgetsModule } from './pages/widgets/widgets.module';
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import { environment } from 'src/environments/environment';
     BrowserAnimationsModule,
     MatSidenavModule,
     SharedModule,
-    UserModule
+    UserModule,
+    WidgetsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

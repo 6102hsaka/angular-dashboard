@@ -1,12 +1,30 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+
+import { SpinnerService } from './pages/widgets/spinner/spinner.service';
+
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit {
-  title = 'angular-dashboard';
+export class AppComponent implements OnInit, OnDestroy {
+    title = 'angular-dashboard';
+    isSpinnerVisible = false;
+    spinnerSubscription: Subscription;
 
-  ngOnInit(): void { }
+    constructor(private spinnerService: SpinnerService) { }
+
+    ngOnInit(): void { 
+        this.spinnerSubscription = this.spinnerService.showSpinner.subscribe(
+            res => {
+                this.isSpinnerVisible = res;
+            }
+        )
+    }
+
+    ngOnDestroy(): void { 
+        this.spinnerSubscription.unsubscribe();
+    }
 }

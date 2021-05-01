@@ -22,7 +22,7 @@
 					</a>
 				</div>
             	<div *ngIf="currentUser">
-              		<p mat-menu-item>Hi, {{ currentUser.email }}</p>
+              		<p mat-menu-item>Hi, {{ currentUser.displayName || currentUser.email }}</p>
              		<p mat-menu-item (click)="onLogout()">
 						<mat-icon>logout</mat-icon>
 						Logout

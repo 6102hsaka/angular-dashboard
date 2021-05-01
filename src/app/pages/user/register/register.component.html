@@ -1,35 +1,39 @@
-<mat-card class="form-container">
-    <mat-card-header>
-        <mat-card-title>Registration Form</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-        <form #registrationForm="ngForm" (ngSubmit)="onSubmit()" 
-            fxFlex fxLayout="column" class="registration-form">
-            <marquee>Please Register to continue</marquee>
-            <mat-form-field class="form-field">
-                <input matInput 
-                    placeholder="Enter your email id" 
-                    name="email" 
-                    ngModel
-                    required />
-            </mat-form-field>
-            <mat-form-field class="form-field">
-                <input matInput 
-                    type="password"
-                    placeholder="Enter your password" 
-                    name="password" 
-                    ngModel
-                    required />
-            </mat-form-field>
-            <br />
-            <mat-checkbox ngModel name="tc">
-                Agree to our terms and conditions
-            </mat-checkbox>
-            <br />
-            <button mat-raised-button color="primary" 
-                [disabled]="!registrationForm.valid || !registrationForm.form.value.tc">
-                SignUp
-            </button>
-        </form>
-    </mat-card-content>
-</mat-card>
+<div class="form-container">
+    <app-error-alert [message]="errorMessage"></app-error-alert>
+
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>Registration Form</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <form #registrationForm="ngForm" (ngSubmit)="onSubmit()" 
+                fxFlex fxLayout="column" class="registration-form">
+                <marquee>Please Register to continue</marquee>
+                <mat-form-field class="form-field">
+                    <input matInput 
+                        placeholder="Enter your email id" 
+                        name="email" 
+                        ngModel
+                        required />
+                </mat-form-field>
+                <mat-form-field class="form-field">
+                    <input matInput 
+                        type="password"
+                        placeholder="Enter your password" 
+                        name="password" 
+                        ngModel
+                        required />
+                </mat-form-field>
+                <br /> 
+                <mat-checkbox ngModel name="tc">
+                    Agree to our terms and conditions
+                </mat-checkbox>
+                <br />
+                <button mat-raised-button color="primary" 
+                    [disabled]="!registrationForm.valid || !registrationForm.form.value.tc">
+                    Sign Up
+                </button>
+            </form>
+        </mat-card-content>
+    </mat-card>
+</div>

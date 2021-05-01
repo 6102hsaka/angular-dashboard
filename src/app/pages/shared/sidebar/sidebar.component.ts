@@ -1,7 +1,10 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
+import firebase from 'firebase/app';
+
 import { AuthService } from 'src/app/core/auth/auth.service';
-import { User } from 'src/app/core/auth/user.model';
+
 
 @Component({
   selector: 'app-sidebar',
@@ -10,17 +13,15 @@ import { User } from 'src/app/core/auth/user.model';
 })
 export class SidebarComponent implements OnInit, OnDestroy {
 
+    public currentUser: firebase.User;
     private userSubscription: Subscription;
-    public currentUser: User;
 
-    constructor(private authService: AuthService) { }
+    constructor(private firebaseAuth: AngularFireAuth, private authService: AuthService) { }
 
     ngOnInit(): void {
-        this.userSubscription = this.authService.currentlyLoggedInUser.subscribe(
-            user => {
-                this.currentUser = user;
-            }
-        )
+        this.userSubscription = this.firebaseAuth.authState.subscribe(user => {
+            this.currentUser = user;
+        });
     }
 
     onLogout = () => this.authService.logout();
@@ -28,5 +29,4 @@ export class SidebarComponent implements OnInit, OnDestroy {
     ngOnDestroy(): void {
         this.userSubscription.unsubscribe();
     }
-
 }

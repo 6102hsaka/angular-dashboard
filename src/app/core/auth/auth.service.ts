@@ -1,46 +1,39 @@
+import { AngularFireAuth } from '@angular/fire/auth';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subject } from 'rxjs';
 
-import { User } from './user.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-    
-    savedUsers: User[];
 
-    currentlyLoggedInUser = new Subject<User>();
+    constructor(private firebaseAuth: AngularFireAuth, private router: Router) { }
 
-    constructor(private router: Router) { 
-        this.savedUsers = [
-            { id: "1", email: "akash", password: "password" },
-            { id: "2", email: "samir", password: "password" },
-            { id: "3", email: "aadityash", password: "password" },
-            { id: "4", email: "atharv", password: "password" }
-        ];
+    async signUp(email: string, password: string): Promise<string> {
+        let errorDesc: string;
+        await this.firebaseAuth.createUserWithEmailAndPassword(email, password)
+            .then(response => {
+                this.router.navigate(["/home"]);
+            }).catch(error => {
+                errorDesc = error.code;
+            });
+        return errorDesc;  
     }
 
-    signUp(email: string, password: string) {
-        const len = this.savedUsers.length;
-        const newUser = new User(len+"", email, password);
-        this.currentlyLoggedInUser.next(newUser);
-        this.router.navigate(["/home"]);
-    }
-
-    signIn(email: string, password: string) {
-        const filteredData = this.savedUsers.filter(user => user.email===email && user.password===password);
-        if(filteredData.length===1) {
-            this.currentlyLoggedInUser.next(filteredData[0]);
-            this.router.navigate(["/home"]);
-        } else {
-            this.currentlyLoggedInUser.next(null);
-        }
+    async signIn(email: string, password: string): Promise<string> {
+        let errorDesc: string;
+        await this.firebaseAuth.signInWithEmailAndPassword(email, password)
+            .then(response => {
+                this.router.navigate(["/home"]);
+            }).catch(error => {
+                errorDesc = error.code;
+            });
+        return errorDesc;
     }
 
     logout() {
-      this.currentlyLoggedInUser.next(null);
-      this.router.navigate(["/auth","login"]);
+        this.firebaseAuth.signOut();
+        this.router.navigate(["/auth","login"]);
     }
 }

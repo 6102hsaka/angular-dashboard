@@ -4,6 +4,7 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { FormsModule } from '@angular/forms';
 import { MaterialModule } from './material.module';
+import { WidgetsModule } from '../widgets/widgets.module';
 
 
 @NgModule({
@@ -14,7 +15,8 @@ import { MaterialModule } from './material.module';
   imports: [
     CommonModule,
     FormsModule,
-    MaterialModule
+    MaterialModule,
+    WidgetsModule
   ], 
   exports: [
     LoginComponent,

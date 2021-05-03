@@ -1,1 +1,32 @@
-<p>dashboard works!</p>
+<div class="container-fluid dashboard-container">
+    <h1>Covid 19 - Dashboard</h1>
+    <section class="dashboard-header" fxLayout fxLayoutAlign="space-around">
+        <app-header-card *ngFor="let item of headerData"
+            [title]="item.title"
+            [oneday]="item.oneday"
+            [total]="item.total">
+        </app-header-card>
+    </section>
+    
+    <section class="row rank-table-container">
+        <div class="col-md-4 col-12">
+            <app-rank-table title="States with Highest Confirmed Cases"
+                [dataSource]="statesWithHighestConfirmedCases"
+                >
+            </app-rank-table>
+        </div>
+        <div class="col-md-4 col-12">
+            <app-rank-table title="States with Highest Recovered Cases"
+            [dataSource]="statesWithHighestRecoveredCases"
+                >
+            </app-rank-table>
+        </div>
+        <div class="col-md-4 col-12">
+            <app-rank-table title="States with Highest Vaccination"
+            [dataSource]="statesWithHighestVaccination"
+            >
+        </app-rank-table>
+        </div>
+    </section>
+
+</div>

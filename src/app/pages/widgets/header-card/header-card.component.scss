@@ -1,0 +1,59 @@
+.hdr-card {
+    height: 120px;
+    width: 200px;
+    padding: 20px;
+    border-radius: 10px;
+
+    .hdr-card-title {
+        font-weight: 500;
+        font-size: x-large;
+    }
+
+    .hdr-card-oneday {
+        font-weight: 300;
+        font-size: small;
+        margin-top: 16px;
+    }
+
+    .hdr-card-total {
+        font-weight: 400;
+        font-size: large;
+    }
+}
+
+.Confirmed {
+    color: #ffffff;
+    background-color: #ff0000;
+    .hdr-card-oneday {
+        color: #fff2f3;
+    }
+}
+
+.Active {
+    color: #ffffff;
+    background-color: #0000ff;
+    .hdr-card-oneday {
+        color: #f2f2ff;
+    }
+}
+
+.Recovered {
+    color: #ffffff;
+    background-color: #00ff00;
+    .hdr-card-oneday {
+        color: #f3fff2;
+    }
+}
+
+.Deceased {
+    color: #ffffff;
+    background-color: #dbd0d0;
+    .hdr-card-oneday {
+        color: #ebe6e6;
+    }
+}
+
+.Vaccinated {
+    color: #ffffff;
+    background-color: #ffff00;
+}

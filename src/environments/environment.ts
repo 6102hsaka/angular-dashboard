@@ -12,6 +12,9 @@ export const environment = {
     messagingSenderId: "470546673735",
     appId: "1:470546673735:web:1621a8d7a12588999d8162",
     measurementId: "G-471S2KPQE2"
+  },
+  url: {
+    covid: "https://api.covid19india.org/v4/min"
   }
 };
 

@@ -3,7 +3,9 @@ import { CommonModule } from '@angular/common';
 
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { HomeComponent } from './home/home.component';
+import { MaterialModule } from './material.module';
 import { ProfileComponent } from './profile/profile.component';
+import { WidgetsModule } from '../widgets/widgets.module';
 
 
 @NgModule({
@@ -13,7 +15,9 @@ import { ProfileComponent } from './profile/profile.component';
     ProfileComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    MaterialModule,
+    WidgetsModule,
   ],
   exports: [
     DashboardComponent,

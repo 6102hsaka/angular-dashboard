@@ -11,13 +11,7 @@ export class SpinnerService {
         this.showSpinner = new Subject<boolean>();
     }
 
-    show() {
-        this.showSpinner.next(true);
-        console.log("show"); 
-    }
+    show = () => this.showSpinner.next(true); 
 
-    hide() {
-        this.showSpinner.next(false);
-        console.log("hide");
-    }
+    hide = () => this.showSpinner.next(false);
 }

@@ -1,0 +1,12 @@
+<div class="hdr-card mat-elevation-z8" [class]="title">
+    <div class="hdr-card-title">
+        {{ title }}
+    </div>
+    <div class="hdr-card-oneday">
+        &nbsp; <span *ngIf="oneday">+</span>
+        {{ formatNumber(oneday) }} 
+    </div>
+    <div class="hdr-card-total">
+        {{ formatNumber(total) }}
+    </div>
+</div>

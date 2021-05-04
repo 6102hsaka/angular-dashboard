@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 
-import { SpinnerService } from './pages/widgets/spinner/spinner.service';
+import { SpinnerService } from './pages/shared/spinner/spinner.service';
 
 
 @Component({
@@ -19,7 +19,7 @@ export class AppComponent implements OnInit, OnDestroy {
     ngOnInit(): void { 
         this.spinnerSubscription = this.spinnerService.showSpinner.subscribe(
             res => {
-                this.isSpinnerVisible = res;
+                this.isSpinnerVisible = res!==0;
             }
         )
     }

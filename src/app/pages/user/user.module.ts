@@ -1,14 +1,16 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LoginComponent } from './login/login.component';
-import { RegisterComponent } from './register/register.component';
 import { FormsModule } from '@angular/forms';
+
+import { ErrorAlertComponent } from './error-alert/error-alert.component';
+import { LoginComponent } from './login/login.component';
 import { MaterialModule } from './material.module';
-import { WidgetsModule } from '../widgets/widgets.module';
+import { RegisterComponent } from './register/register.component';
 
 
 @NgModule({
   declarations: [
+    ErrorAlertComponent,
     LoginComponent,
     RegisterComponent,
   ],
@@ -16,7 +18,6 @@ import { WidgetsModule } from '../widgets/widgets.module';
     CommonModule,
     FormsModule,
     MaterialModule,
-    WidgetsModule
   ], 
   exports: [
     LoginComponent,

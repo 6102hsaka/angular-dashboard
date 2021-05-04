@@ -2,7 +2,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { SpinnerService } from 'src/app/pages/widgets/spinner/spinner.service';
+import { SpinnerService } from 'src/app/pages/shared/spinner/spinner.service';
 
 
 @Injectable({

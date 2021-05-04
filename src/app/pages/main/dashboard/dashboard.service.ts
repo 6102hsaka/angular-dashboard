@@ -2,55 +2,57 @@ import { Injectable } from "@angular/core";
 import { map } from 'rxjs/operators';
 
 import { ExactDateDataService } from "src/app/core/http/exact-date-data.service";
+import { TimeseriesService } from "src/app/core/http/timeseries-data.service";
 
-
-const STATE_NAMES = {
-    AP: 'Andhra Pradesh',
-    AR: 'Arunachal Pradesh',
-    AS: 'Assam',
-    BR: 'Bihar',
-    CT: 'Chhattisgarh',
-    GA: 'Goa',
-    GJ: 'Gujarat',
-    HR: 'Haryana',
-    HP: 'Himachal Pradesh',
-    JH: 'Jharkhand',
-    KA: 'Karnataka',
-    KL: 'Kerala',
-    MP: 'Madhya Pradesh',
-    MH: 'Maharashtra',
-    MN: 'Manipur',
-    ML: 'Meghalaya',
-    MZ: 'Mizoram',
-    NL: 'Nagaland',
-    OR: 'Odisha',
-    PB: 'Punjab',
-    RJ: 'Rajasthan',
-    SK: 'Sikkim',
-    TN: 'Tamil Nadu',
-    TG: 'Telangana',
-    TR: 'Tripura',
-    UT: 'Uttarakhand',
-    UP: 'Uttar Pradesh',
-    WB: 'West Bengal',
-    AN: 'Andaman and Nicobar Islands',
-    CH: 'Chandigarh',
-    DN: 'Dadra and Nagar Haveli and Daman and Diu',
-    DL: 'Delhi',
-    JK: 'Jammu and Kashmir',
-    LA: 'Ladakh',
-    LD: 'Lakshadweep',
-    PY: 'Puducherry',
-    TT: 'India',
-    UN: 'Unassigned',
-};
 
 @Injectable({
     providedIn: 'root'
 })
 export class DashboardService {
 
-    constructor(private exactDateDataService: ExactDateDataService) { }
+    STATE_NAMES = {
+        AP: 'Andhra Pradesh',
+        AR: 'Arunachal Pradesh',
+        AS: 'Assam',
+        BR: 'Bihar',
+        CT: 'Chhattisgarh',
+        GA: 'Goa',
+        GJ: 'Gujarat',
+        HR: 'Haryana',
+        HP: 'Himachal Pradesh',
+        JH: 'Jharkhand',
+        KA: 'Karnataka',
+        KL: 'Kerala',
+        MP: 'Madhya Pradesh',
+        MH: 'Maharashtra',
+        MN: 'Manipur',
+        ML: 'Meghalaya',
+        MZ: 'Mizoram',
+        NL: 'Nagaland',
+        OR: 'Odisha',
+        PB: 'Punjab',
+        RJ: 'Rajasthan',
+        SK: 'Sikkim',
+        TN: 'Tamil Nadu',
+        TG: 'Telangana',
+        TR: 'Tripura',
+        UT: 'Uttarakhand',
+        UP: 'Uttar Pradesh',
+        WB: 'West Bengal',
+        AN: 'Andaman and Nicobar Islands',
+        CH: 'Chandigarh',
+        DN: 'Dadra and Nagar Haveli and Daman and Diu',
+        DL: 'Delhi',
+        JK: 'Jammu and Kashmir',
+        LA: 'Ladakh',
+        LD: 'Lakshadweep',
+        PY: 'Puducherry',
+        TT: 'India',
+        UN: 'Unassigned',
+    };
+
+    constructor(private exactDateService: ExactDateDataService, 
+        private timeseriesService: TimeseriesService) { }
 
     formatNumber(num: string | number): string {
         if(num===undefined)     
@@ -64,11 +66,13 @@ export class DashboardService {
     }
 
     fetch() {
-        this.exactDateDataService.fetch();
+        this.exactDateService.fetch();
+        this.timeseriesService.fetch();
+        this.getTimeSeriesDataForIndividual();
     }
 
     getForIndia() {
-        return this.exactDateDataService.fetchedData.pipe(
+        return this.exactDateService.fetchedData.pipe(
             map(data => {
                 const result = [];
                 result.push(
@@ -86,7 +90,7 @@ export class DashboardService {
     };
 
     getStateListForHighestRecord() {
-        return this.exactDateDataService.fetchedData.pipe(
+        return this.exactDateService.fetchedData.pipe(
             map((data: Object) => {
                 const stateList = [];
                 for(let key in data) {
@@ -106,7 +110,7 @@ export class DashboardService {
                 const result = [];
                 for(let i=0;i<5;i++) {
                     result.push({
-                        name: STATE_NAMES[data[i][0]], cases: data[i][1]['confirmed']
+                        name: this.STATE_NAMES[data[i][0]], cases: data[i][1]['confirmed']
                     })
                 }
                 return result;
@@ -121,7 +125,7 @@ export class DashboardService {
                  const result = [];
                  for(let i=0;i<5;i++) {
                      result.push({
-                         name: STATE_NAMES[data[i][0]], cases: data[i][1]['recovered']
+                         name: this.STATE_NAMES[data[i][0]], cases: data[i][1]['recovered']
                      })
                  }
                  return result;
@@ -136,10 +140,27 @@ export class DashboardService {
                  const result = [];
                  for(let i=0;i<5;i++) {
                      result.push({
-                         name: STATE_NAMES[data[i][0]], cases: data[i][1]['vaccinated']
+                         name: this.STATE_NAMES[data[i][0]], cases: data[i][1]['vaccinated']
                      })
                  }
                  return result;
+            })
+        )
+    }
+
+    getTimeSeriesDataForIndividual(state:string = "TT", type: string= 'confirmed') {
+        return this.timeseriesService.fetchedData.pipe(
+            map(response => {
+                const data = Object.entries(response[state].dates);
+                const result = []
+                data.forEach( item => {
+                    if(item.length===2 && item[1] && item[1]['total'] && item[1]['total'][type]) {
+                        result.push([Date.parse(item[0]), item[1]['total'][type]])
+                    } else {
+                        result.push([Date.parse(item[0]), 0])
+                    }
+                });
+                return result;
             })
         )
     }

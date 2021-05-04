@@ -12,6 +12,7 @@ import { DashboardService } from './dashboard.service';
 export class DashboardComponent implements OnInit, OnDestroy {
 
 	headerData = [];
+	
 	statesWithHighestConfirmedCases = [];
 	statesWithHighestRecoveredCases = [];
 	statesWithHighestVaccination = [];

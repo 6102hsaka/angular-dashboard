@@ -25,8 +25,7 @@ export class RankTableComponent implements OnChanges {
             newRecord['name'] = record['name'];
             newRecord['cases'] = this.service.formatNumber(record['cases']);
             return newRecord;
-        })
-        console.log(this.dataSource);
+        });
      }
 
     displayedColumns: string[] = ['name', 'cases'];

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 
-import { FlexLayoutModule } from '@angular/flex-layout'
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatTableModule } from '@angular/material/table';
 
 

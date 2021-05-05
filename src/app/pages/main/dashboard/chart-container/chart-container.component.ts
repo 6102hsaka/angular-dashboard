@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { DashboardService } from '../dashboard.service';
+
+import { ChartService } from './chart-container.service';
 
 
 @Component({
@@ -11,20 +12,31 @@ import { DashboardService } from '../dashboard.service';
 export class ChartContainerComponent implements OnInit, OnDestroy {
 
     individualTimeseriesData = [];
+    allStatesCountData = [];
 
     individualTimeseriesSubscription: Subscription;
+    allStatesSubscription: Subscription;
 
-    constructor(private dashboardService: DashboardService) { }
+    constructor(private chartService: ChartService) { 
+        this.chartService.fetch();
+    }
 
     ngOnInit(): void {
-        this.individualTimeseriesSubscription = this.dashboardService
+        this.individualTimeseriesSubscription = this.chartService
 			.getTimeSeriesDataForIndividual()
 				.subscribe(data => {
 					this.individualTimeseriesData = data
 				});
+
+        this.allStatesSubscription = this.chartService
+                .getCasesCountForEveryState()
+                    .subscribe(data => {
+                        this.allStatesCountData= data;
+                    });
     }
 
     ngOnDestroy(): void {
         this.individualTimeseriesSubscription.unsubscribe();
+        this.allStatesSubscription.unsubscribe();
     }
 }

@@ -51,8 +51,7 @@ export class DashboardService {
         UN: 'Unassigned',
     };
 
-    constructor(private exactDateService: ExactDateDataService, 
-        private timeseriesService: TimeseriesService) { }
+    constructor(private exactDateService: ExactDateDataService) { }
 
     formatNumber(num: string | number): string {
         if(num===undefined)     
@@ -67,8 +66,6 @@ export class DashboardService {
 
     fetch() {
         this.exactDateService.fetch();
-        this.timeseriesService.fetch();
-        this.getTimeSeriesDataForIndividual();
     }
 
     getForIndia() {
@@ -148,20 +145,4 @@ export class DashboardService {
         )
     }
 
-    getTimeSeriesDataForIndividual(state:string = "TT", type: string= 'confirmed') {
-        return this.timeseriesService.fetchedData.pipe(
-            map(response => {
-                const data = Object.entries(response[state].dates);
-                const result = []
-                data.forEach( item => {
-                    if(item.length===2 && item[1] && item[1]['total'] && item[1]['total'][type]) {
-                        result.push([Date.parse(item[0]), item[1]['total'][type]])
-                    } else {
-                        result.push([Date.parse(item[0]), 0])
-                    }
-                });
-                return result;
-            })
-        )
-    }
 }

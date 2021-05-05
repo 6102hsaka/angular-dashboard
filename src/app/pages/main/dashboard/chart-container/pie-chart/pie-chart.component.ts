@@ -30,13 +30,16 @@ export class PieChartComponent implements OnChanges {
         this.labels = []
         this.responsive = [
             {
-                breakpoint: 1000,
+                breakpoint: 5000,
                 options: {
                     chart: {
-                        width: 600
+                        // width: 480
                     },
                     legend: {
-                        position: "bottom"
+                        show: false
+                    },
+                    plotOptions: {
+        
                     }
                 }
             }

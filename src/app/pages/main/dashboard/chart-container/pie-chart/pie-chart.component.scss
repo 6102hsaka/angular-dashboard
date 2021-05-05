@@ -1,6 +1,9 @@
-#chart {
-    // max-width: 600px;
-    height: 500px;
-    margin: 12px;
-    padding: 0;
+.chart {
+  padding: 12px;
+  background-color: #fff;
+  height: 100%;
+
+  h2 {
+    margin-bottom: 12px;
   }
+}

@@ -1,7 +1,8 @@
 import { AngularFireAuth } from '@angular/fire/auth';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from "@angular/router";
 import { Injectable } from "@angular/core";
-import firebase from 'firebase/app';
+import { Observable } from 'rxjs';
+import { map, take } from 'rxjs/operators';
 
 
 @Injectable({
@@ -9,18 +10,14 @@ import firebase from 'firebase/app';
 })
 export class AuthGuard implements CanActivate {
 
-    private currentUser: firebase.User;
+    constructor(private firebaseAuth: AngularFireAuth, private router: Router) { }
 
-    constructor(private firebaseAuth: AngularFireAuth, private router: Router) {
-        this.firebaseAuth.authState.subscribe(user => {
-            this.currentUser = user;
-        });
-    }
-
-    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | UrlTree {
-            if(this.currentUser) {
-                return true;
-            }
-            return this.router.createUrlTree(['/auth', 'login']);
+    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> {
+        return this.firebaseAuth.authState.pipe(
+            take(1),
+            map(user => {
+                return user ? true : this.router.createUrlTree(['/auth', 'login']);
+            })
+        );
     }
 }

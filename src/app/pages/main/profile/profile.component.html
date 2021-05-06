@@ -1,1 +1,12 @@
-<p>profile works!</p>
+<div fxLayout fxLayoutAlign="space-between">
+    <h1>My Profile</h1>
+    <button mat-button (click)="openDialog()">
+        <mat-icon>edit</mat-icon>
+    </button>
+</div>
+<mat-divider></mat-divider>
+<div>
+    User Id: {{ uid }} <br/>
+    UserName: {{ displayName }} <br/>
+    EmailId: {{ email }}
+</div>

@@ -1,0 +1,12 @@
+<form #profileUpdateForm="ngForm" (ngSubmit)="onSubmit()">
+    Update Display Name
+    <mat-form-field>
+        <input matInput 
+            placeholder="Enter your username" 
+            name="displayName" 
+            [(ngModel)]="data.displayName"
+            required />
+    </mat-form-field>
+    <br />
+    <button mat-button [disabled]="!profileUpdateForm.valid">Update</button>
+</form>

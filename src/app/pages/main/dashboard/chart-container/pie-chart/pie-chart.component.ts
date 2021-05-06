@@ -55,7 +55,5 @@ export class PieChartComponent implements OnChanges {
             this.labels.push(item[0])
             this.series.push(item[1])
         });
-        console.log(this.labels);
-        console.log(this.series);
     }   
 }

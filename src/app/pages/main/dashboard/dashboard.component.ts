@@ -1,7 +1,9 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
+import { Observable, of } from 'rxjs';
 
 import { DashboardService } from './dashboard.service';
+import { IHeaderCard } from './header-card/header-card';
+import { IRankTable } from './rank-table/rank-table';
 
 
 @Component({
@@ -9,53 +11,27 @@ import { DashboardService } from './dashboard.service';
 	templateUrl: './dashboard.component.html',
 	styleUrls: ['./dashboard.component.scss']
 })
-export class DashboardComponent implements OnInit, OnDestroy {
+export class DashboardComponent implements OnInit {
 
-	headerData = [];
-	
-	statesWithHighestConfirmedCases = [];
-	statesWithHighestRecoveredCases = [];
-	statesWithHighestVaccination = [];
-
-	getForIndiaSubscription: Subscription;
-	highestConfirmedCasesSubscription: Subscription;
-	highestRecoveredCasesSubscription: Subscription;
-	highestVaccinationSubscription: Subscription;
+	headerData$: Observable<IHeaderCard[]>;
+	statesWithHighestConfirmedCases$: Observable<IRankTable[]>;
+	statesWithHighestRecoveredCases$: Observable<IRankTable[]>;
+	statesWithHighestVaccination$: Observable<IRankTable[]>;
 
   	constructor(private dashboardService: DashboardService) {
 		this.dashboardService.fetch();
 	}
 
   	ngOnInit(): void {
-		this.getForIndiaSubscription = this.dashboardService
-			.getForIndia()
-				.subscribe(data => {
-					this.headerData = data
-				});
+		this.headerData$ = this.dashboardService.getForIndia();
 
-		this.highestConfirmedCasesSubscription = this.dashboardService
-			.getStatesWithHighestConfirmedCases()
-				.subscribe(data => {
-					this.statesWithHighestConfirmedCases = data;
-				});
+		this.statesWithHighestConfirmedCases$ = this.dashboardService
+			.getStatesWithHighestConfirmedCases();
 
-		this.highestRecoveredCasesSubscription = this.dashboardService
-			.getStatesWithHighestRecoveredCases()
-				.subscribe(data => {
-					this.statesWithHighestRecoveredCases = data;
-				})
+		this.statesWithHighestRecoveredCases$ = this.dashboardService
+			.getStatesWithHighestRecoveredCases();
 
-		this.highestVaccinationSubscription = this.dashboardService
-			.getStateWithHighestVaccinations()
-				.subscribe(data => {
-					this.statesWithHighestVaccination = data
-				});
-	}
-
-  	ngOnDestroy(): void {
-		this.getForIndiaSubscription.unsubscribe();
-		this.highestConfirmedCasesSubscription.unsubscribe();
-		this.highestRecoveredCasesSubscription.unsubscribe();
-		this.highestVaccinationSubscription.unsubscribe();
+		this.statesWithHighestVaccination$ = this.dashboardService
+			.getStateWithHighestVaccinations();
 	}
 }

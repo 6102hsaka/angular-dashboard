@@ -1,8 +1,10 @@
 import { Injectable } from "@angular/core";
+import { Observable } from "rxjs";
 import { map } from 'rxjs/operators';
 
 import { ExactDateDataService } from "src/app/core/http/exact-date-data.service";
-import { TimeseriesService } from "src/app/core/http/timeseries-data.service";
+import { IHeaderCard } from "./header-card/header-card";
+import { IRankTable } from "./rank-table/rank-table";
 
 
 @Injectable({
@@ -68,10 +70,10 @@ export class DashboardService {
         this.exactDateService.fetch();
     }
 
-    getForIndia() {
+    getForIndia(): Observable<IHeaderCard[]> {
         return this.exactDateService.fetchedData.pipe(
             map(data => {
-                const result = [];
+                const result: IHeaderCard[] = [];
                 result.push(
                     { title: 'Confirmed', oneday: data.TT.delta.confirmed, total: data.TT.total.confirmed },
                     { title: 'Recovered', oneday: data.TT.delta.recovered, total: data.TT.total.recovered },
@@ -100,11 +102,11 @@ export class DashboardService {
         )
     }
 
-    getStatesWithHighestConfirmedCases() {
+    getStatesWithHighestConfirmedCases(): Observable<IRankTable[]> {
         return this.getStateListForHighestRecord().pipe(
            map((data:[]) => {
                 data.sort((a: Object,b: Object) => b[1].confirmed-a[1].confirmed);
-                const result = [];
+                const result: IRankTable[] = [];
                 for(let i=0;i<5;i++) {
                     result.push({
                         name: this.STATE_NAMES[data[i][0]], cases: data[i][1]['confirmed']
@@ -115,11 +117,11 @@ export class DashboardService {
        )
     }
 
-    getStatesWithHighestRecoveredCases() {
+    getStatesWithHighestRecoveredCases(): Observable<IRankTable[]> {
         return this.getStateListForHighestRecord().pipe(
             map((data:[]) => {
                  data.sort((a: Object,b: Object) => b[1].recovered-a[1].recovered);
-                 const result = [];
+                 const result: IRankTable[] = [];
                  for(let i=0;i<5;i++) {
                      result.push({
                          name: this.STATE_NAMES[data[i][0]], cases: data[i][1]['recovered']
@@ -130,19 +132,18 @@ export class DashboardService {
         )
     }
 
-    getStateWithHighestVaccinations() {
+    getStateWithHighestVaccinations(): Observable<IRankTable[]> {
         return this.getStateListForHighestRecord().pipe(
             map((data:[]) => {
-                 data.sort((a: Object,b: Object) => b[1].vaccinated-a[1].vaccinated);
-                 const result = [];
-                 for(let i=0;i<5;i++) {
-                     result.push({
-                         name: this.STATE_NAMES[data[i][0]], cases: data[i][1]['vaccinated']
-                     })
-                 }
-                 return result;
+                data.sort((a: Object,b: Object) => b[1].vaccinated-a[1].vaccinated);
+                const result: IRankTable[] = [];
+                for(let i=0;i<5;i++) {
+                    result.push({
+                        name: this.STATE_NAMES[data[i][0]], cases: data[i][1]['vaccinated']
+                    })
+                }
+                return result;
             })
         )
     }
-
 }

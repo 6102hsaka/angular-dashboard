@@ -1,7 +1,7 @@
 <div class="container-fluid dashboard-container">
     <h1>Covid 19 - Dashboard</h1>
     <section class="dashboard-header" fxLayout fxLayoutAlign="space-around">
-        <app-header-card *ngFor="let item of headerData"
+        <app-header-card *ngFor="let item of (headerData$ | async)"
             [title]="item.title"
             [oneday]="item.oneday"
             [total]="item.total">
@@ -15,19 +15,19 @@
     <section class="row rank-table-container">
         <div class="col-md-4 col-12">
             <app-rank-table title="States with Highest Confirmed Cases"
-                [dataSource]="statesWithHighestConfirmedCases"
+                [dataSource]="statesWithHighestConfirmedCases$ | async"
                 >
             </app-rank-table>
         </div>
         <div class="col-md-4 col-12">
             <app-rank-table title="States with Highest Recovered Cases"
-            [dataSource]="statesWithHighestRecoveredCases"
+            [dataSource]="statesWithHighestRecoveredCases$ | async"
                 >
             </app-rank-table>
         </div>
         <div class="col-md-4 col-12">
             <app-rank-table title="States with Highest Vaccination"
-            [dataSource]="statesWithHighestVaccination"
+            [dataSource]="statesWithHighestVaccination$ | async"
             >
         </app-rank-table>
         </div>

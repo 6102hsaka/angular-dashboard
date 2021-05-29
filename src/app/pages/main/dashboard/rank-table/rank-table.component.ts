@@ -20,12 +20,14 @@ export class RankTableComponent implements OnChanges {
     constructor(private service: DashboardService) { }
 
     ngOnChanges(): void {
-        this.dataSource = this.dataSource.map(record => {
-            const newRecord: DataSource = {}
-            newRecord['name'] = record['name'];
-            newRecord['cases'] = this.service.formatNumber(record['cases']);
-            return newRecord;
-        });
+        if(!!this.dataSource) {
+            this.dataSource = this.dataSource.map(record => {
+                const newRecord: DataSource = {}
+                newRecord['name'] = record['name'];
+                newRecord['cases'] = this.service.formatNumber(record['cases']);
+                return newRecord;
+            });
+        }
      }
 
     displayedColumns: string[] = ['name', 'cases'];
